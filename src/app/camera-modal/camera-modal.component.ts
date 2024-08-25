@@ -1,4 +1,10 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import {
   CameraPreview,
   CameraPreviewOptions,
@@ -14,6 +20,8 @@ import {
   IonImg,
   ModalController,
 } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { cameraReverse, camera, closeCircle } from 'ionicons/icons';
 
 @Component({
   selector: 'app-camera-modal',
@@ -30,10 +38,16 @@ import {
     IonContent,
   ],
 })
-export class CameraModalComponent implements OnInit {
-  image!: string;
+export class CameraModalComponent implements OnInit, OnChanges {
+  image!: string | null;
   cameraInView = false;
-  constructor() {}
+  constructor() {
+    addIcons({ cameraReverse, camera, closeCircle });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+  }
 
   ngOnInit() {
     this.openCamera();
@@ -42,12 +56,13 @@ export class CameraModalComponent implements OnInit {
   modal = inject(ModalController);
 
   openCamera() {
+    this.image = null;
+    const body = document.getElementById('tab-content') as any;
+    body.classList.add('display');
     const cameraPreviewOptions: CameraPreviewOptions = {
-      position: 'rear', // front or rear
-      parent: 'content', // the id on the ion-content
-      // width: window.screen.width, //width of the camera display
-      // height: window.screen.height, //height of the camera
-      toBack: false,
+      position: 'front',
+      parent: 'content',
+      toBack: true,
       className: 'cameraPreview',
     };
     CameraPreview.start(cameraPreviewOptions);
@@ -57,7 +72,6 @@ export class CameraModalComponent implements OnInit {
   stopCamera() {
     CameraPreview.stop();
     this.cameraInView = false;
-    this.modal.dismiss();
   }
 
   async captureImage() {
@@ -71,5 +85,12 @@ export class CameraModalComponent implements OnInit {
 
   async flipCamera() {
     await CameraPreview.flip();
+  }
+
+  closeCamera() {
+    this.stopCamera();
+    this.modal.dismiss();
+    const body = document.getElementById('tab-content') as any;
+    body.classList.remove('display');
   }
 }

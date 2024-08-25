@@ -39,3 +39,19 @@
 ion-content {
   --background: transparent !important;
 }
+
+ion-modal {
+  --background: transparent !important;
+}
+
+#background-content {
+  background: red;
+}
+
+ion-page {
+  display: none;
+}
+
+.display {
+  display: none !important;
+}

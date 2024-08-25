@@ -9,6 +9,17 @@
   z-index: -1;
 }
 
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 200px;
+  width: 200px;
+  border: 3px solid red;
+  transform: translate(-50%, -60%);
+  z-index: 100000000;
+}
+
 #capture {
   position: absolute;
   bottom: 30px;
