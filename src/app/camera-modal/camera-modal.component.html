@@ -1,0 +1,23 @@
+<ion-content [fullscreen]="true">
+  @if (image) {
+  <ion-img [src]="image"></ion-img>
+  }
+
+  <div id="content" class="cameraPreview">
+    @if ( cameraInView ) {
+    <div class="camera-buttons">
+      <ion-button (click)="stopCamera()" id="close" expand="block">
+        <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+      </ion-button>
+
+      <ion-button (click)="captureImage()" expand="block" id="capture">
+        <ion-icon name="camera" slot="icon-only"></ion-icon>
+      </ion-button>
+
+      <ion-button (click)="flipCamera()" expand="block" id="flip">
+        <ion-icon name="camera-reverse" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+    }
+  </div>
+</ion-content>
